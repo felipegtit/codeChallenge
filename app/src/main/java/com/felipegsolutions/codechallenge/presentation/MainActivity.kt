@@ -1,17 +1,24 @@
-package com.felipegsolutions.codechallenge
+package com.felipegsolutions.codechallenge.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.felipegsolutions.codechallenge.RecyclerViewAdapter
 import com.felipegsolutions.codechallenge.databinding.ActivityMainBinding
 import com.felipegsolutions.codechallenge.viewmodel.MainActivityViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    lateinit var viewModel: MainActivityViewModel
+
+    val viewModel: MainActivityViewModel by viewModels()
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var manager: RecyclerView.LayoutManager
     private lateinit var adapterPics: RecyclerViewAdapter
@@ -34,7 +41,8 @@ class MainActivity : AppCompatActivity() {
             val tags = binding.editTextSearch.text.toString().split(",")
             var tagsConcat = ""
             tags.forEach {
-                tagsConcat += "$it+"
+                val tag = it.trim()
+                tagsConcat += "$tag+"
             }
             tagsConcat = tagsConcat.removeSuffix("+")
             viewModel.makeApiCAll(tagsConcat)
@@ -42,8 +50,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun onItemClick() {
+
+    }
+
     private fun initRecyclerView() {
-        adapterPics = RecyclerViewAdapter()
+        adapterPics = RecyclerViewAdapter(this)
         manager = LinearLayoutManager(this)
         binding.recyclerView.apply {
             adapter = adapterPics
@@ -53,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+
         viewModel.getLiveDataObserver().observe(this, Observer { pics ->
             if (pics != null) {
                 adapterPics.setAdapterData(pics.hits)
