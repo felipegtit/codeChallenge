@@ -28,7 +28,18 @@ class MainActivity : AppCompatActivity() {
         initRecyclerView()
         initViewModel()
 
-        viewModel.makeApiCAll()
+        viewModel.makeApiCAll("fruits")
+
+        binding.button.setOnClickListener {
+            val tags = binding.editTextSearch.text.toString().split(",")
+            var tagsConcat = ""
+            tags.forEach {
+                tagsConcat += "$it+"
+            }
+            tagsConcat = tagsConcat.removeSuffix("+")
+            viewModel.makeApiCAll(tagsConcat)
+        }
+
     }
 
     private fun initRecyclerView() {

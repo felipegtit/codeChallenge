@@ -9,6 +9,7 @@
     <EditText
         android:id="@+id/editTextSearch"
         android:layout_margin="15dp"
+        android:hint="Enter the tags here separated with ,"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />

@@ -17,11 +17,11 @@ class MainActivityViewModel: ViewModel() {
         return liveDataPics
     }
 
-    fun makeApiCAll() {
+    fun makeApiCAll(tags: String) {
         val retroInstance = RetroInstance.getRetroInstance()
         val retroService = retroInstance.create(RetroServiceInterface::class.java)
 
-        val call = retroService.getImages()
+        val call = retroService.getImages(tags)
 
         call.enqueue(object : Callback<Pics> {
 

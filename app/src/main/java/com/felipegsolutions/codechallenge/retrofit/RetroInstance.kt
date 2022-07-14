@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetroInstance {
 
     companion object {
-        val BASE_URL = "https://pixabay.com"///api/?key=28614023-97bf3e8f3ffa8e57ea87f2b0c&q=yellow+flowers&image_type=photo"
+        val BASE_URL = "https://pixabay.com"
 
         fun getRetroInstance(): Retrofit {
             return Retrofit.Builder()
